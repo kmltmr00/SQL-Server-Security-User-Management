@@ -1,35 +1,27 @@
+# SQL Server Minimum Permission Examples - Backup & ReadOnly Users
 
-# SQL Server Backup Kullanıcısı Oluşturma
+Bu repo, SQL Server'da **minimum yetki prensibi** ile güvenli kullanıcı oluşturma örneklerini içerir. Backup ve ReadOnly kullanıcı senaryolarını kapsar.
 
-Bu repo, SQL Server'da **minimum yetki prensibi** ile sadece backup alabilen özel bir kullanıcı oluşturmayı gösterir.
+## 🎯 **Örnek Senaryolar**
 
-## 🎯 **Senaryo**
-- `backuplogin` isimli bir kullanıcı oluştur
-- Sadece `AdventureWorks2022` veritabanına erişebilsin  
-- **Sadece backup** alabilsin
-- Verileri **göremesin** veya **değiştiremesin**
-- Diğer veritabanlarına **erişemesin**
+### 1. 🔐 Backup User
+Sadece backup alabilen kullanıcı:
+- ✅ Backup yetkisi
+- ❌ Veri görüntüleme yok
+- ❌ Değişiklik yapma yok
+- ❌ Diğer DB erişimi yok
 
-## 📋 **Özellikler**
-- ✅ Server-level yetki kısıtlamaları
-- ✅ Database-level erişim kontrolü  
-- ✅ Sadece BACKUP yetkisi
-- ✅ Gereksiz izinlerin kaldırılması
-- ✅ Güvenlik audit için test komutları
+### 2. 👁️ ReadOnly User  
+Sadece veri okuyabilen kullanıcı:
+- ✅ SELECT yetkisi
+- ❌ INSERT/UPDATE/DELETE yok
+- ❌ EXECUTE yok
+- ❌ Diğer DB erişimi yok
 
 ## 🛠️ **Kurulum**
 1. SQL Server Management Studio (SSMS) açın
-2. `backup_permission.sql` dosyasını çalıştırın
-3. Script içindeki test komutlarıyla çalışmayı doğrulayın
-
-## 🔍 **Test Komutları**
-
-```sql
--- Bu ÇALIŞMALI (Backup yetkisi)
-BACKUP DATABASE AdventureWorks2022 TO DISK = 'C:\test.bak'
-
--- Bu HATA VERMELİ (Select yetkisi yok)
-SELECT * FROM HumanResources.Department
-
--- Bu HATA VERMELİ (Diğer veritabanı)
-USE other_database
+2. İstenilen script'i seçin:
+   - `backup-user/backup_permission.sql` - Backup kullanıcısı için
+   - `readonly-user/readonly_permission.sql` - Readonly kullanıcısı için
+3. Script'i çalıştırın
+4. Test komutlarıyla çalışmayı doğrulayın
